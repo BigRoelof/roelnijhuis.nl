@@ -389,7 +389,7 @@ body.lang-en #language-toggle .active-en {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url('images/header-background.webp');
+  background-image: url('../assets/images/header-background.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

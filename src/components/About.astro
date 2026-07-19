@@ -1,28 +1,13 @@
 ---
-import fs from 'fs';
-import path from 'path';
+import { Image } from 'astro:assets';
 
-// Read all files from public/images/roel
-const roelDir = path.join(process.cwd(), 'public', 'images', 'roel');
-let roelPhotos = [];
+// Dynamically import all images in src/assets/images/roel/ using Vite's import.meta.glob
+const imageModules = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/roel/*.{jpeg,jpg,png,gif,webp}', { eager: true });
 
-try {
-  if (fs.existsSync(roelDir)) {
-    const files = fs.readdirSync(roelDir);
-    const imgExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'];
-    roelPhotos = files
-      .filter(file => imgExtensions.includes(path.extname(file).toLowerCase()))
-      .sort() // Sort alphabetically to maintain consistent order
-      .map(file => `images/roel/${file}`);
-  }
-} catch (e) {
-  console.error("Failed to read roel photos directory", e);
-}
-
-// Fallback in case folder reading fails or is empty
-if (roelPhotos.length === 0) {
-  roelPhotos = ['images/Portfolio.png', 'images/introBBQ_25.jpg'];
-}
+// Extract the default export (ImageMetadata) and sort alphabetically by file path to maintain order
+const roelPhotos = Object.entries(imageModules)
+  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+  .map(([_, module]) => module.default);
 ---
 
 <!-- About Me Section -->
@@ -40,7 +25,7 @@ if (roelPhotos.length === 0) {
       <div class="about-image-wrapper">
         <!-- The photo stack container -->
         <div class="about-image-stack" id="photo-stack" aria-label="Fotostapel. Klik om de volgende foto te bekijken.">
-          {roelPhotos.map((photoSrc, index) => {
+          {roelPhotos.map((photoMetadata, index) => {
             let positionClass = 'stack-hidden';
             if (index === 0) positionClass = 'stack-top';
             else if (index === 1) positionClass = 'stack-mid';
@@ -48,7 +33,7 @@ if (roelPhotos.length === 0) {
             
             return (
               <div class={`about-image-card ${positionClass}`} data-id={`photo-${index}`}>
-                <img src={photoSrc} alt={`Roel Nijhuis profile ${index + 1}`} class="about-img" />
+                <Image src={photoMetadata} alt={`Roel Nijhuis profile ${index + 1}`} class="about-img" />
               </div>
             );
           })}
