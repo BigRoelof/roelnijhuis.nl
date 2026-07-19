@@ -1,0 +1,114 @@
+---
+import fs from 'fs';
+import path from 'path';
+
+// Read all files from public/images/roel
+const roelDir = path.join(process.cwd(), 'public', 'images', 'roel');
+let roelPhotos = [];
+
+try {
+  if (fs.existsSync(roelDir)) {
+    const files = fs.readdirSync(roelDir);
+    const imgExtensions = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg'];
+    roelPhotos = files
+      .filter(file => imgExtensions.includes(path.extname(file).toLowerCase()))
+      .sort() // Sort alphabetically to maintain consistent order
+      .map(file => `images/roel/${file}`);
+  }
+} catch (e) {
+  console.error("Failed to read roel photos directory", e);
+}
+
+// Fallback in case folder reading fails or is empty
+if (roelPhotos.length === 0) {
+  roelPhotos = ['images/Portfolio.png', 'images/introBBQ_25.jpg'];
+}
+---
+
+<!-- About Me Section -->
+<section id="about" class="about-section section-padding">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2 class="section-title">
+        <span class="lang-en">About Me</span>
+        <span class="lang-nl">Over mij</span>
+      </h2>
+      <span class="section-subtitle-line"></span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-image-wrapper">
+        <!-- The photo stack container -->
+        <div class="about-image-stack" id="photo-stack" aria-label="Fotostapel. Klik om de volgende foto te bekijken.">
+          {roelPhotos.map((photoSrc, index) => {
+            let positionClass = 'stack-hidden';
+            if (index === 0) positionClass = 'stack-top';
+            else if (index === 1) positionClass = 'stack-mid';
+            else if (index === 2) positionClass = 'stack-bot';
+            
+            return (
+              <div class={`about-image-card ${positionClass}`} data-id={`photo-${index}`}>
+                <img src={photoSrc} alt={`Roel Nijhuis Profile Picture ${index + 1}`} class="about-img" />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div class="about-content">
+        <h3 class="about-lead">
+          <span class="lang-en">Calm, curious, and collaborative.</span>
+          <span class="lang-nl">Rustig, leergierig en samenwerkingsgericht.</span>
+        </h3>
+        <p class="about-text">
+          <span class="lang-en">I describe myself as a calm and approachable person who gets along well with almost everyone. I am attentive to the needs of others and enjoy contributing to a positive work environment. As an eager learner, I regularly seek opportunities to build new skills, whether through team collaboration or self-directed learning using online resources.</span>
+          <span class="lang-nl">Ik omschrijf mezelf als een rustig en benaderbaar persoon die met vrijwel iedereen goed kan opschieten. Ik heb oog voor de behoeften van anderen en draag graag bij aan een positieve werksfeer. Daarnaast ben ik erg leergierig; ik zoek voortdurend naar kansen om nieuwe vaardigheden te ontwikkelen, zowel in teamverband als door zelfstudie via online cursussen en tutorials.</span>
+        </p>
+
+        <div class="about-info-grid">
+          <div class="info-item">
+            <div class="info-icon-wrapper">
+              <i data-lucide="map-pin"></i>
+            </div>
+            <div class="info-details">
+              <span class="info-label">
+                <span class="lang-en">Location</span>
+                <span class="lang-nl">Locatie</span>
+              </span>
+              <span class="info-val">Nijmegen, Netherlands</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon-wrapper">
+              <i data-lucide="graduation-cap"></i>
+            </div>
+            <div class="info-details">
+              <span class="info-label">
+                <span class="lang-en">Study</span>
+                <span class="lang-nl">Opleiding</span>
+              </span>
+              <span class="info-val">Radboud University</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon-wrapper">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="info-details">
+              <span class="info-label">
+                <span class="lang-en">Interests</span>
+                <span class="lang-nl">Interesses</span>
+              </span>
+              <span class="info-val">
+                <span class="lang-en">Music, hockey, running, chess</span>
+                <span class="lang-nl">Muziek, hockey, hardlopen, schaken</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
