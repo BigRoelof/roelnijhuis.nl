@@ -1,13 +1,13 @@
 ---
-import { Image } from 'astro:assets';
-import ruLogo from '../assets/images/logos/RU_logo.png';
-import jpLogo from '../assets/images/logos/JP_Logo.png';
-import thaliaLogo from '../assets/images/logos/Thalia_Logo.png';
-import homecareLogo from '../assets/images/logos/Homecare_Logo.png';
-import tccLogo from '../assets/images/logos/TCC_Logo.png';
-import ahLogo from '../assets/images/logos/AH_Logo.png';
-import webdevLogo from '../assets/images/logos/WebDev_Logo.png';
-import avondaleLogo from '../assets/images/logos/Avondale_Logo.png';
+import { Image } from "astro:assets";
+import ruLogo from "../assets/images/logos/RU_logo.png";
+import jpLogo from "../assets/images/logos/JP_Logo.png";
+import thaliaLogo from "../assets/images/logos/Thalia_Logo.png";
+import homecareLogo from "../assets/images/logos/Homecare_Logo.png";
+import tccLogo from "../assets/images/logos/TCC_Logo.png";
+import ahLogo from "../assets/images/logos/AH_Logo.png";
+import webdevLogo from "../assets/images/logos/WebDev_Logo.png";
+import avondaleLogo from "../assets/images/logos/Avondale_Logo.png";
 ---
 
 <!-- Resume Section -->
@@ -85,12 +85,7 @@ import avondaleLogo from '../assets/images/logos/Avondale_Logo.png';
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-logo">
-            <Image
-              src={jpLogo}
-              alt="JP Activiteiten"
-              width={32}
-              height={32}
-            />
+            <Image src={jpLogo} alt="JP Activiteiten" width={32} height={32} />
           </div>
           <div class="timeline-info">
             <span class="timeline-date">
@@ -128,12 +123,7 @@ import avondaleLogo from '../assets/images/logos/Avondale_Logo.png';
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-logo">
-            <Image
-              src={jpLogo}
-              alt="JP Activiteiten"
-              width={32}
-              height={32}
-            />
+            <Image src={jpLogo} alt="JP Activiteiten" width={32} height={32} />
           </div>
           <div class="timeline-info">
             <span class="timeline-date">2025 - 2026</span>
@@ -271,12 +261,7 @@ import avondaleLogo from '../assets/images/logos/Avondale_Logo.png';
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-logo">
-            <Image
-              src={homecareLogo}
-              alt="Home Care"
-              width={32}
-              height={32}
-            />
+            <Image src={homecareLogo} alt="Home Care" width={32} height={32} />
           </div>
           <div class="timeline-info">
             <span class="timeline-date">2021 - 2023</span>
@@ -336,12 +321,7 @@ import avondaleLogo from '../assets/images/logos/Avondale_Logo.png';
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-logo">
-            <Image
-              src={ahLogo}
-              alt="Albert Heijn"
-              width={32}
-              height={32}
-            />
+            <Image src={ahLogo} alt="Albert Heijn" width={32} height={32} />
           </div>
           <div class="timeline-info">
             <span class="timeline-date">2016 - 2018</span>
@@ -709,6 +689,47 @@ import avondaleLogo from '../assets/images/logos/Avondale_Logo.png';
           </div>
           <div class="project-card-footer">
             <span class="project-tech">SEO</span>
+          </div>
+        </div>
+
+        <!-- Thesis -->
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-folder-icon">
+              <i data-lucide="folder"></i>
+            </div>
+            <div class="project-links">
+              <a
+                href="https://github.com/BigRoelof/thesis.git"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link"
+                title="GitHub Repository"
+                aria-label="GitHub Repository for SAT Solving Algorithms"
+              >
+                <i data-lucide="github"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-card-content">
+            <h3 class="project-title">SAT Solver</h3>
+            <p class="project-desc">
+              <span class="lang-en"
+                >A collection of C++ based SAT solver implementations (DPLL,
+                CDCL, variants) and a Python benchmark harness that runs all
+                solvers on CNF instances and produces timing / correctness
+                plots.</span
+              >
+              <span class="lang-nl"
+                >Een verzameling SAT-solvers in C++ (DPLL, CDCL en varianten)
+                met een Python-benchmark die prestaties en correctheid op
+                CNF-instanties vergelijkt.</span
+              >
+            </p>
+          </div>
+          <div class="project-card-footer">
+            <span class="project-tech">C++</span>
+            <span class="project-tech">Python</span>
           </div>
         </div>
 
