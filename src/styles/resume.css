@@ -1,0 +1,307 @@
+/* ==========================================================================
+   RESUME SECTION (EDUCATION & EXPERIENCE)
+   ========================================================================== */
+.resume-section {
+  background-color: var(--bg-primary);
+}
+
+.resume-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.resume-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  transition: var(--transition-medium);
+}
+
+.resume-tab-btn i {
+  width: 18px;
+  height: 18px;
+}
+
+.resume-tab-btn:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.resume-tab-btn.active {
+  background-color: var(--accent-color);
+  color: var(--bg-primary);
+  border-color: var(--accent-color);
+  box-shadow: 0 5px 15px rgba(214, 175, 55, 0.2);
+}
+
+/* Tab panes toggle */
+.resume-tab-content {
+  display: none;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.resume-tab-content.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Timeline Layout */
+.timeline {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 110px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 78px;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--border-color);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 45px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 13px;
+  left: -31px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--bg-primary);
+  border: 3px solid var(--accent-color);
+  z-index: 2;
+  transition: var(--transition-fast);
+}
+
+.timeline-item:hover .timeline-dot {
+  background-color: var(--accent-color);
+  transform: scale(1.2);
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+.timeline-logo {
+  position: absolute;
+  top: 8px;
+  left: -124px;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: var(--transition-medium);
+  flex-shrink: 0;
+}
+
+.timeline-logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.timeline-item:hover .timeline-logo {
+  border-color: rgba(212, 175, 55, 0.35);
+  background-color: rgba(212, 175, 55, 0.06);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+}
+
+.timeline-info {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  border-radius: 8px;
+  transition: var(--transition-medium);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+/* Let's embed the logo inside the timeline card header instead */
+.timeline-info::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: -8px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  transform: rotate(45deg);
+}
+
+.timeline-item:hover .timeline-info {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-md);
+}
+
+.timeline-date {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  background-color: rgba(214, 175, 55, 0.08);
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+  border: 1px solid rgba(214, 175, 55, 0.15);
+}
+
+.timeline-title {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.timeline-location {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 15px;
+}
+
+.timeline-desc {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.timeline-desc a {
+  color: var(--accent-color);
+  text-decoration: underline;
+  transition: var(--transition-fast);
+}
+
+.timeline-desc a:hover {
+  color: var(--text-primary);
+}
+
+/* Projects Tab Grid & Cards */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: var(--transition-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-color);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.project-folder-icon {
+  color: var(--accent-color);
+}
+
+.project-folder-icon i {
+  width: 40px;
+  height: 40px;
+}
+
+.project-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.project-link {
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.project-link:hover {
+  color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.project-link i {
+  width: 20px;
+  height: 20px;
+}
+
+.project-card-content {
+  flex-grow: 1;
+}
+
+.project-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.project-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.project-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.project-tech {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background-color: var(--bg-tertiary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}

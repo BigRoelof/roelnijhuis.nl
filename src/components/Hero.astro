@@ -1,6 +1,7 @@
 <!-- Hero Section -->
 <section id="hero" class="hero-section">
   <div class="hero-bg-overlay"></div>
+  <canvas id="starfield-canvas" class="starfield-canvas"></canvas>
   <div class="hero-container">
     <div class="hero-content">
       <p class="hero-sub">
@@ -62,3 +63,238 @@
     </div>
   </div>
 </section>
+
+<script>
+  function initStarfield() {
+    const canvas = document.getElementById(
+      "starfield-canvas",
+    ) as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const particleCount = 500;
+    const interactionRadius = 140;
+    const baseRgb = [96, 165, 250];
+    const activeRgb = [255, 255, 255];
+    const speed = 0.3;
+    const springK = 0.022 + speed * 0.068; // 0.056
+    const damping = 0.9 - speed * 0.13; // 0.835
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const mouse = { x: -9999, y: -9999, active: false };
+    let stars: any[] = [];
+    let rafId = 0;
+    let influence = 0;
+
+    function seedStars(W: number, H: number) {
+      return Array.from({ length: particleCount }, () => {
+        const ox = Math.random() * W;
+        const oy = Math.random() * H;
+        return {
+          ox,
+          oy,
+          x: ox,
+          y: oy,
+          vx: 0,
+          vy: 0,
+          r: 0.8 + Math.random() * 3,
+          alpha: 0.12 + Math.random() * 0.55,
+          phase: Math.random() * Math.PI * 2,
+          rot: Math.random() * Math.PI * 2,
+        };
+      });
+    }
+
+    let W = 0,
+      H = 0,
+      dpr = 1;
+    const MAX_STRETCH = 18;
+    const REPULSE_STR = 1.8;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.offsetWidth;
+      H = canvas.offsetHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = seedStars(W, H);
+    }
+
+    function updateMouse(cx: number, cy: number) {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = cx - r.left;
+      mouse.y = cy - r.top;
+      mouse.active = true;
+    }
+
+    window.addEventListener(
+      "mousemove",
+      (e) => {
+        updateMouse(e.clientX, e.clientY);
+      },
+      { passive: true },
+    );
+
+    window.addEventListener(
+      "touchmove",
+      (e) => {
+        if (e.touches[0]) {
+          updateMouse(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      },
+      { passive: true },
+    );
+
+    const onLeave = () => {
+      mouse.active = false;
+    };
+    window.addEventListener("mouseleave", onLeave);
+    window.addEventListener("touchend", onLeave);
+
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(canvas);
+    resize();
+
+    function lerpRgb(a: number[], b: number[], t: number) {
+      return `rgb(${Math.round(a[0] + (b[0] - a[0]) * t)},${Math.round(a[1] + (b[1] - a[1]) * t)},${Math.round(a[2] + (b[2] - a[2]) * t)})`;
+    }
+
+    let t0 = performance.now();
+    let isVisible = true;
+
+    function draw(now: number) {
+      if (!isVisible) {
+        rafId = 0;
+        return;
+      }
+      const elapsed = (now - t0) / 1000;
+      ctx!.clearRect(0, 0, W, H);
+
+      const active = mouse.active && !reduceMotion;
+
+      if (active) {
+        influence = Math.min(1, influence + 0.06);
+      } else {
+        influence = Math.max(0, influence - 0.03);
+      }
+      const inf = influence;
+      const ir2 = interactionRadius * interactionRadius;
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+
+        const dx = s.x - mouse.x;
+        const dy = s.y - mouse.y;
+        const dist2 = dx * dx + dy * dy;
+        const dist = Math.sqrt(dist2);
+
+        let t = 0;
+        if (inf > 0.01 && dist2 < ir2) {
+          t = Math.pow(1 - dist / interactionRadius, 2) * inf;
+        }
+
+        if (t > 0.01 && dist > 0.1) {
+          s.vx += (dx / dist) * REPULSE_STR * t;
+          s.vy += (dy / dist) * REPULSE_STR * t;
+        }
+        s.vx += (s.ox - s.x) * springK;
+        s.vy += (s.oy - s.y) * springK;
+        s.vx *= damping;
+        s.vy *= damping;
+        s.x += s.vx;
+        s.y += s.vy;
+
+        const twinkle = reduceMotion
+          ? 0
+          : Math.sin(elapsed * 1.4 + s.phase) * 0.5 + 0.5;
+        const baseA = s.alpha * (0.55 + twinkle * 0.45);
+        const drawAlpha = Math.min(1, baseA + t * (1 - baseA));
+
+        const stretchH = s.r * 2 + t * MAX_STRETCH;
+        const stretchW = s.r * 2;
+
+        const velMag = Math.sqrt(s.vx * s.vx + s.vy * s.vy);
+        const drawRot =
+          velMag > 0.3 ? Math.atan2(s.vy, s.vx) + Math.PI / 2 : s.rot;
+
+        const color =
+          t > 0.01
+            ? lerpRgb(baseRgb, activeRgb, t)
+            : lerpRgb(baseRgb, activeRgb, 0);
+
+        ctx!.save();
+        ctx!.translate(s.x, s.y);
+        ctx!.rotate(drawRot);
+        ctx!.globalAlpha = drawAlpha;
+        ctx!.fillStyle = color;
+
+        if (t > 0.4) {
+          ctx!.shadowBlur = 6 + t * 10;
+          ctx!.shadowColor = color;
+        } else {
+          ctx!.shadowBlur = 0;
+        }
+
+        const hw = stretchW / 2;
+        const hh = stretchH / 2;
+        const cr = Math.min(hw, hh);
+
+        ctx!.beginPath();
+        ctx!.moveTo(-hw + cr, -hh);
+        ctx!.lineTo(hw - cr, -hh);
+        ctx!.quadraticCurveTo(hw, -hh, hw, -hh + cr);
+        ctx!.lineTo(hw, hh - cr);
+        ctx!.quadraticCurveTo(hw, hh, hw - cr, hh);
+        ctx!.lineTo(-hw + cr, hh);
+        ctx!.quadraticCurveTo(-hw, hh, -hw, hh - cr);
+        ctx!.lineTo(-hw, -hh + cr);
+        ctx!.quadraticCurveTo(-hw, -hh, -hw + cr, -hh);
+        ctx!.closePath();
+        ctx!.fill();
+        ctx!.restore();
+      }
+
+      ctx!.globalAlpha = 1;
+      ctx!.shadowBlur = 0;
+      rafId = requestAnimationFrame(draw);
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry?.isIntersecting ?? true;
+        if (isVisible && !rafId) {
+          t0 = performance.now();
+          rafId = requestAnimationFrame(draw);
+        }
+      },
+      { threshold: 0.01 },
+    );
+
+    io.observe(canvas);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        isVisible = false;
+      } else {
+        isVisible = true;
+        if (!rafId) {
+          t0 = performance.now();
+          rafId = requestAnimationFrame(draw);
+        }
+      }
+    });
+  }
+
+  // Initialize
+  document.addEventListener("DOMContentLoaded", initStarfield);
+  if (
+    document.readyState === "interactive" ||
+    document.readyState === "complete"
+  ) {
+    initStarfield();
+  }
+</script>
