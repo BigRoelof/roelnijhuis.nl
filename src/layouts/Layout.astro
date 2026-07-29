@@ -1,42 +1,45 @@
 ---
-import '../styles/styles.css';
+import "../styles/styles.css";
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const { 
-  title = "Roel Nijhuis | Persoonlijke Website & CV", 
-  description = "Persoonlijke website en cv van Roel Nijhuis, een rustige en nieuwsgierige software engineer uit Nederland." 
+const {
+  title = "Roel Nijhuis | Persoonlijke Website & CV",
+  description = "Persoonlijke website en cv van Roel Nijhuis, een rustige en nieuwsgierige software engineer uit Nederland.",
 } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <title>{title}</title>
-  <meta name="description" content={description} />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@0.344.0"></script>
-</head>
-<body class="lang-nl">
-  <slot />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0"></script>
+  </head>
+  <body class="lang-nl">
+    <slot />
 
-  <script src="../scripts/script.js"></script>
-  <script src="../scripts/header.js"></script>
-  <script src="../scripts/about.js"></script>
-  <script src="../scripts/resume.js"></script>
-  <script src="../scripts/skills.js"></script>
-  <script src="../scripts/contact.js"></script>
-</body>
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/header.js"></script>
+    <script src="../scripts/about.js"></script>
+    <script src="../scripts/resume.js"></script>
+    <script src="../scripts/skills.js"></script>
+    <script src="../scripts/contact.js"></script>
+  </body>
 </html>
