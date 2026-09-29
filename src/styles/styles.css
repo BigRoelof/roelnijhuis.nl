@@ -4,48 +4,41 @@
 @import './resume.css';
 @import './skills.css';
 @import './contact.css';
-@import './footer.css';
 
 /* ==========================================================================
-   DESIGN SYSTEM & CUSTOM PROPERTIES
+   DESIGN TOKENS — "star atlas"
    ========================================================================== */
 :root {
   /* Colors */
-  --bg-primary: #0b0c10;
-  --bg-secondary: #12131c;
-  --bg-tertiary: #1f212d;
-  --accent-color: #d4af37;
-  /* Premium Gold */
-  --accent-hover: #f3cf7a;
-  --accent-rgb: 212, 175, 55;
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #64748b;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(212, 175, 55, 0.5);
+  --night: #0e1b33;
+  --night-raised: #15264a;
+  --chart-line: #2b4170;
+  --starlight: #f1ecdd;
+  --haze: #9aa8c4;
+  --star: #ffd66b;
+  --star-rgb: 255, 214, 107;
 
-  /* Fonts */
-  --font-headings: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  /* Type */
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-body: 'Schibsted Grotesk', system-ui, sans-serif;
 
-  /* Shadows & Glassmorphism */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  --glass-bg: rgba(18, 19, 28, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  /* Scale (1.333 — perfect fourth) */
+  --step--1: 0.8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.4167rem;
+  --step-2: 1.8889rem;
+  --step-3: 2.5185rem;
+  --step-4: 3.358rem;
 
   /* Layout */
-  --header-height: 80px;
-  --container-width: 1200px;
-  --transition-fast: 0.2s ease;
-  --transition-medium: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --header-height: 72px;
+  --container-width: 1160px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================
-   RESET & BASE STYLES
+   RESET & BASE
    ========================================================================== */
 *,
 *::before,
@@ -57,14 +50,16 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  scroll-padding-top: var(--header-height);
+  font-size: 100%;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--night);
+  color: var(--starlight);
   font-family: var(--font-body);
-  line-height: 1.6;
+  font-size: var(--step-0);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -72,23 +67,29 @@ body {
 h1,
 h2,
 h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-headings);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text-primary);
+h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--starlight);
 }
 
 a {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: var(--transition-fast);
+  color: var(--star);
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--star-rgb), 0.35);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
 }
 
 a:hover {
-  color: var(--accent-hover);
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--star);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 img {
@@ -100,12 +101,18 @@ img {
 button {
   background: none;
   border: none;
+  color: inherit;
   cursor: pointer;
-  font-family: inherit;
+  font: inherit;
+}
+
+::selection {
+  background: var(--star);
+  color: var(--night);
 }
 
 /* ==========================================================================
-   LANGUAGE SWITCHER LOGIC (CSS SIDE)
+   LANGUAGE SWITCHING
    ========================================================================== */
 body.lang-en .lang-nl {
   display: none !important;
@@ -116,48 +123,35 @@ body.lang-nl .lang-en {
 }
 
 /* ==========================================================================
-   REUSABLE UTILITIES
+   SHARED LAYOUT
    ========================================================================== */
 .container {
-  width: 90%;
-  max-width: var(--container-width);
+  width: 100%;
+  max-width: calc(var(--container-width) + 2 * var(--gutter));
   margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
 .section-padding {
-  padding: 100px 0;
-}
-
-.text-center {
-  text-align: center;
+  padding: clamp(80px, 12vw, 140px) 0 0;
 }
 
 .section-header {
-  margin-bottom: 60px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+  max-width: 40rem;
 }
 
 .section-title {
-  font-size: 2.5rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-}
-
-.section-subtitle-line {
-  display: block;
-  width: 60px;
-  height: 3px;
-  background-color: var(--accent-color);
-  margin: 0 auto;
+  font-size: var(--step-4);
+  letter-spacing: -0.015em;
+  font-variation-settings: 'opsz' 72;
 }
 
 .section-desc {
-  max-width: 700px;
-  margin: 20px auto 0;
-  color: var(--text-secondary);
-  font-size: 1.1rem;
+  margin-top: 16px;
+  color: var(--haze);
+  font-size: var(--step-0);
+  max-width: 34rem;
 }
 
 /* Buttons */
@@ -166,257 +160,69 @@ body.lang-nl .lang-en {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 28px;
-  font-size: 0.95rem;
+  padding: 13px 24px;
+  font-size: var(--step-0);
   font-weight: 600;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: var(--transition-medium);
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
 }
 
 .btn-primary {
-  background-color: var(--accent-color);
-  color: var(--bg-primary) !important;
-  border: 1px solid var(--accent-color);
+  background-color: var(--star);
+  color: var(--night);
+  border: 1px solid var(--star);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-hover);
-  border-color: var(--accent-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(214, 175, 55, 0.3);
+  background-color: var(--starlight);
+  border-color: var(--starlight);
+  color: var(--night);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .btn-outline {
   background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  color: var(--starlight);
+  border: 1px solid var(--chart-line);
 }
 
 .btn-outline:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: var(--text-primary);
-  transform: translateY(-2px);
+  border-color: var(--starlight);
+  color: var(--starlight);
 }
 
 .btn-block {
   width: 100%;
 }
 
-
 /* ==========================================================================
-   KEYFRAME ANIMATIONS
+   FOOTER SPACING
    ========================================================================== */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+main > section:last-child,
+body > section:last-of-type {
+  padding-bottom: clamp(80px, 10vw, 120px);
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scrollWheel {
-  0% {
-    top: 8px;
-    opacity: 1;
-  }
-
-  50% {
-    top: 24px;
-    opacity: 0;
-  }
-
-  100% {
-    top: 8px;
-    opacity: 1;
-  }
-}
-
-@keyframes bounce {
-
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translate(-50%, 0);
-  }
-
-  40% {
-    transform: translate(-50%, -10px);
-  }
-
-  60% {
-    transform: translate(-50%, -5px);
-  }
-}
-
-@keyframes beat {
-
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.2);
-  }
-}
-
-/* ==========================================================================
-   MEDIA QUERIES (RESPONSIVE STYLING)
-   ========================================================================== */
-@media (max-width: 1024px) {
-  .hero-title {
-    font-size: 3.5rem;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 50px;
-  }
-
-  .about-image-wrapper {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
-
-@media (max-width: 768px) {
-  :root {
-    --header-height: 70px;
-  }
-
-  .section-padding {
-    padding: 70px 0;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .nav-menu {
-    display: none;
-  }
-
-  .mobile-menu-toggle {
-    display: block;
-  }
-
-  .hero-title {
-    font-size: 2.8rem;
-  }
-
-  .hero-description {
-    font-size: 1.1rem;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .hero-actions .btn {
-    width: 100%;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-form-panel {
-    padding: 30px 20px;
-  }
-
-  .resume-tabs {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .resume-tab-btn {
-    justify-content: center;
-  }
-
-  .timeline {
-    padding-left: 30px;
-  }
-
-  .timeline::before {
-    left: 8px;
-  }
-
-  .timeline-dot {
-    left: -20px;
-    top: 14px;
-    width: 10px;
-    height: 10px;
-  }
-
-  .timeline-logo {
-    display: none;
-  }
-
-  .timeline-info {
-    padding: 20px;
-  }
-
-  .timeline-info::before {
-    display: none;
-  }
-
-  .hero-scroll-indicator {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 2.3rem;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
