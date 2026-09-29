@@ -1,6 +1,5 @@
 <!-- Hero Section -->
 <section id="hero" class="hero-section">
-  <div class="hero-bg-overlay"></div>
   <canvas id="starfield-canvas" class="starfield-canvas"></canvas>
   <div class="hero-container">
     <div class="hero-content">
@@ -15,22 +14,23 @@
       <div class="hero-description">
         <div class="lang-en">
           <p>
-            I'm a <strong>Computer Science Graduate</strong> based in Nijmegen (the
-            Netherlands), with a focus on building practical web applications.
+            After my bachelor's in Computing Science, I'm now
+            doing my master's in <strong>Information Science</strong> at Radboud University in
+            Nijmegen. My focus is on building practical web applications.
           </p>
           <p>
             Calm and approachable by nature, I enjoy collaborating with others
             to solve problems in a thoughtful way. Outside of my studies, I
-            enjoy <strong>playing music</strong>, <strong>hockey</strong>,
-            <strong>running</strong>, and a good game of <strong>chess</strong>.
+            enjoy <strong>playing music</strong>,
+            <strong>hockey</strong>, <strong>running</strong>, and a good game
+            of <strong>chess</strong>.
           </p>
         </div>
         <div class="lang-nl">
           <p>
-            Onlangs heb ik mijn bachelordiploma behaald in <strong
-              >Computing Science</strong
-            > aan de Radboud Universiteit, en in september start ik aan mijn master
-            Information Science. Mijn focus ligt op het bouwen van praktische webapplicaties.
+            Na mijn bachelor <strong>Computing Science</strong> volg ik nu de
+            master <strong>Information Science</strong> aan de Radboud Universiteit. Mijn focus
+            ligt op het bouwen van praktische webapplicaties.
           </p>
           <p>
             Ik ben rustig van aard, werk graag samen en los problemen op een
@@ -40,26 +40,30 @@
         </div>
       </div>
       <div class="hero-actions">
+        <!-- One link per language; the lang-* class hides the inactive one -->
         <a
-          href="CV_Roel_Nijhuis.pdf"
-          download="CV_Roel_Nijhuis.pdf"
-          class="btn btn-primary"
-          id="resume-download-btn"
+          href="%5BEN%5D%20CV_Roel_Nijhuis.pdf"
+          download="CV_Roel_Nijhuis_EN.pdf"
+          class="btn btn-primary lang-en"
+          id="resume-download-btn-en"
         >
           <i data-lucide="download"></i>
-          <span class="lang-en">Resume</span>
-          <span class="lang-nl">Download CV</span>
+          Download resume
+        </a>
+        <a
+          href="%5BNL%5D%20CV_Roel_Nijhuis.pdf"
+          download="CV_Roel_Nijhuis_NL.pdf"
+          class="btn btn-primary lang-nl"
+          id="resume-download-btn-nl"
+        >
+          <i data-lucide="download"></i>
+          Download CV
         </a>
         <a href="#contact" class="btn btn-outline" id="hero-contact-btn">
           <span class="lang-en">Contact Me</span>
           <span class="lang-nl">Contact</span>
         </a>
       </div>
-    </div>
-    <div class="hero-scroll-indicator">
-      <a href="#about" aria-label="Scroll Down">
-        <span class="mouse-icon"><span class="mouse-wheel"></span></span>
-      </a>
     </div>
   </div>
 </section>
@@ -73,10 +77,10 @@
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const particleCount = 500;
+    const particleCount = 420;
     const interactionRadius = 140;
-    const baseRgb = [96, 165, 250];
-    const activeRgb = [255, 255, 255];
+    const baseRgb = [241, 236, 221];
+    const activeRgb = [255, 214, 107];
     const speed = 0.3;
     const springK = 0.022 + speed * 0.068; // 0.056
     const damping = 0.9 - speed * 0.13; // 0.835
@@ -100,7 +104,7 @@
           y: oy,
           vx: 0,
           vy: 0,
-          r: 0.8 + Math.random() * 3,
+          r: 0.5 + Math.random() * Math.random() * 2.2,
           alpha: 0.12 + Math.random() * 0.55,
           phase: Math.random() * Math.PI * 2,
           rot: Math.random() * Math.PI * 2,
@@ -113,6 +117,7 @@
       dpr = 1;
     const MAX_STRETCH = 18;
     const REPULSE_STR = 1.8;
+    const CONSTELLATION_DIST = 90;
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -183,6 +188,7 @@
       }
       const inf = influence;
       const ir2 = interactionRadius * interactionRadius;
+      const near: any[] = [];
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
@@ -196,6 +202,8 @@
         if (inf > 0.01 && dist2 < ir2) {
           t = Math.pow(1 - dist / interactionRadius, 2) * inf;
         }
+
+        if (t > 0.05) near.push(s);
 
         if (t > 0.01 && dist > 0.1) {
           s.vx += (dx / dist) * REPULSE_STR * t;
@@ -256,6 +264,34 @@
         ctx!.closePath();
         ctx!.fill();
         ctx!.restore();
+      }
+
+      // Join stars near the cursor into a constellation
+      if (near.length > 1) {
+        ctx!.globalAlpha = 1;
+        ctx!.shadowBlur = 0;
+        ctx!.lineWidth = 0.7;
+        for (let i = 0; i < near.length; i++) {
+          const a = near[i];
+          let best = -1;
+          let bestD = CONSTELLATION_DIST * CONSTELLATION_DIST;
+          for (let j = i + 1; j < near.length; j++) {
+            const b = near[j];
+            const d = (a.x - b.x) ** 2 + (a.y - b.y) ** 2;
+            if (d < bestD) {
+              bestD = d;
+              best = j;
+            }
+          }
+          if (best < 0) continue;
+          const b = near[best];
+          const fade = 1 - Math.sqrt(bestD) / CONSTELLATION_DIST;
+          ctx!.strokeStyle = `rgba(255,214,107,${0.45 * fade * inf})`;
+          ctx!.beginPath();
+          ctx!.moveTo(a.x, a.y);
+          ctx!.lineTo(b.x, b.y);
+          ctx!.stroke();
+        }
       }
 
       ctx!.globalAlpha = 1;

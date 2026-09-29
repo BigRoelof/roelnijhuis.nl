@@ -1,12 +1,32 @@
+---
+import BrandIcon from "./BrandIcon.astro";
+import {
+  siCplusplus,
+  siPython,
+  siPhp,
+  siJavascript,
+  siTypescript,
+  siOpenjdk,
+  siReact,
+  siVuedotjs,
+  siAstro,
+  siDjango,
+  siLaravel,
+  siCss,
+  siLatex,
+  siGit,
+  siDocker,
+} from "simple-icons";
+---
+
 <!-- Skills Section -->
 <section id="skills" class="skills-section section-padding">
   <div class="container">
-    <div class="section-header text-center">
+    <div class="section-header">
       <h2 class="section-title">
         <span class="lang-en">Skills & Expertise</span>
         <span class="lang-nl">Vaardigheden</span>
       </h2>
-      <span class="section-subtitle-line"></span>
     </div>
 
     <div class="skills-grid">
@@ -95,7 +115,7 @@
         <div class="skill-list">
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">C++</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siCplusplus} /></span>C++</span>
               <span class="skill-percentage">80%</span>
             </div>
             <div class="skill-progress-bg">
@@ -105,7 +125,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Python</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siPython} /></span>Python</span>
               <span class="skill-percentage">70%</span>
             </div>
             <div class="skill-progress-bg">
@@ -115,7 +135,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">PHP</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siPhp} /></span>PHP</span>
               <span class="skill-percentage">70%</span>
             </div>
             <div class="skill-progress-bg">
@@ -125,7 +145,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">JavaScript / TypeScript</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siJavascript} /><BrandIcon icon={siTypescript} /></span>JavaScript / TypeScript</span>
               <span class="skill-percentage">65%</span>
             </div>
             <div class="skill-progress-bg">
@@ -135,7 +155,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">SQL</span>
+              <span class="skill-name"><span class="skill-icons"><i data-lucide="database"></i></span>SQL</span>
               <span class="skill-percentage">60%</span>
             </div>
             <div class="skill-progress-bg">
@@ -145,7 +165,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Java</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siOpenjdk} /></span>Java</span>
               <span class="skill-percentage">60%</span>
             </div>
             <div class="skill-progress-bg">
@@ -165,7 +185,7 @@
         <div class="skill-list">
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Frontend (React, Vue)</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siReact} /><BrandIcon icon={siVuedotjs} /><BrandIcon icon={siAstro} /></span>Frontend (React, Vue, Astro)</span>
               <span class="skill-percentage">80%</span>
             </div>
             <div class="skill-progress-bg">
@@ -175,7 +195,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Backend (Django, Laravel Nova)</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siDjango} /><BrandIcon icon={siLaravel} /></span>Backend (Django, Laravel Nova)</span>
               <span class="skill-percentage">70%</span>
             </div>
             <div class="skill-progress-bg">
@@ -185,7 +205,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">CSS</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siCss} /></span>CSS</span>
               <span class="skill-percentage">60%</span>
             </div>
             <div class="skill-progress-bg">
@@ -195,7 +215,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">LaTeX</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siLatex} /></span>LaTeX</span>
               <span class="skill-percentage">80%</span>
             </div>
             <div class="skill-progress-bg">
@@ -205,7 +225,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Git</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siGit} /></span>Git</span>
               <span class="skill-percentage">70%</span>
             </div>
             <div class="skill-progress-bg">
@@ -215,7 +235,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Docker</span>
+              <span class="skill-name"><span class="skill-icons"><BrandIcon icon={siDocker} /></span>Docker</span>
               <span class="skill-percentage">60%</span>
             </div>
             <div class="skill-progress-bg">
@@ -225,7 +245,7 @@
 
           <div class="skill-item">
             <div class="skill-info">
-              <span class="skill-name">Photoshop</span>
+              <span class="skill-name"><span class="skill-icons"><i data-lucide="image"></i></span>Photoshop</span>
               <span class="skill-percentage">70%</span>
             </div>
             <div class="skill-progress-bg">
