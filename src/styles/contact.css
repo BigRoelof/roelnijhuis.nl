@@ -1,200 +1,183 @@
 /* ==========================================================================
-   CONTACT SECTION
+   CONTACT
    ========================================================================== */
-.contact-section {
-  background-color: var(--bg-primary);
-}
-
 .contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 60px;
-  max-width: 1050px;
-  margin: 50px auto 0;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(48px, 7vw, 96px);
+  align-items: start;
 }
 
 .contact-info-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  border-top: 1px solid var(--chart-line);
 }
 
 .contact-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 24px;
-  transition: var(--transition-medium);
-}
-
-.contact-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.12);
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--chart-line);
 }
 
 .contact-icon {
-  background-color: var(--bg-tertiary);
-  color: var(--accent-color);
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border-color);
+  color: var(--haze);
+  line-height: 0;
+  padding-top: 3px;
 }
 
-.contact-icon i,
-.contact-icon .custom-icon {
-  width: 20px;
-  height: 20px;
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .contact-card-content h4 {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: var(--haze);
+  margin-bottom: 2px;
 }
 
 .contact-card-content a {
-  font-size: 1.1rem;
-  color: var(--text-primary);
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  color: var(--starlight);
+  text-decoration-color: var(--chart-line);
+  overflow-wrap: anywhere;
 }
 
 .contact-card-content a:hover {
-  color: var(--accent-color);
+  color: var(--star);
+  text-decoration-color: currentColor;
 }
 
 .social-links-wrapper {
   display: flex;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 24px;
 }
 
 .social-icon-btn {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition-medium);
-}
-
-.social-icon-btn i,
-.social-icon-btn .custom-icon {
-  width: 20px;
-  height: 20px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--chart-line);
+  border-radius: 50%;
+  color: var(--haze);
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .social-icon-btn:hover {
-  background-color: var(--accent-color);
-  color: var(--bg-primary);
-  border-color: var(--accent-color);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(214, 175, 55, 0.3);
+  color: var(--star);
+  border-color: var(--star);
 }
 
-.social-icon-btn .custom-icon.github-icon {
-  width: 24px;
-  height: 24px;
+.social-icon-btn svg {
+  width: 17px;
+  height: 17px;
 }
 
-/* Contact Form */
-.contact-form-panel {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 40px;
+.custom-icon {
+  width: 18px;
+  height: 18px;
 }
 
+/* Form ------------------------------------------------------------------- */
 .contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+  display: grid;
+  gap: 8px;
 }
 
 .form-group {
   position: relative;
+  padding-top: 18px;
 }
 
 .form-control {
   width: 100%;
+  padding: 10px 0;
+  font: inherit;
+  color: var(--starlight);
   background: transparent;
-  border: none;
-  border-bottom: 2px solid var(--border-color);
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 12px 4px;
-  transition: var(--transition-fast);
-}
-
-.form-control:focus {
-  outline: none;
-  border-bottom-color: var(--accent-color);
+  border: 0;
+  border-bottom: 1px solid var(--chart-line);
+  border-radius: 0;
+  transition: border-color 0.2s ease;
 }
 
 textarea.form-control {
   resize: vertical;
-  min-height: 100px;
+  min-height: 140px;
 }
 
-/* Floating labels */
+.form-control:focus {
+  outline: none;
+  border-bottom-color: var(--star);
+}
+
+.form-control:focus-visible {
+  outline: none;
+}
+
 .form-label {
   position: absolute;
-  left: 4px;
-  top: 12px;
-  color: var(--text-muted);
-  font-size: 1rem;
+  left: 0;
+  top: 28px;
+  color: var(--haze);
   pointer-events: none;
-  transition: var(--transition-fast);
+  transform-origin: left top;
+  transition: transform 0.2s var(--ease), color 0.2s ease;
 }
 
-.form-control:focus~.form-label,
-.form-control:not(:placeholder-shown)~.form-label {
-  top: -12px;
-  font-size: 0.8rem;
-  color: var(--accent-color);
-  font-weight: 600;
+.form-control:focus + .form-label,
+.form-control:not(:placeholder-shown) + .form-label {
+  transform: translateY(-26px) scale(0.82);
 }
 
-/* Alert Boxes */
+.form-control:focus + .form-label {
+  color: var(--star);
+}
+
+.contact-form .btn {
+  width: auto;
+  margin-top: 24px;
+  justify-self: start;
+}
+
 .form-status-alert {
   display: none;
   align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  border-radius: 4px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin-top: 15px;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 0.9375rem;
 }
 
-.form-status-alert i {
-  width: 20px;
-  height: 20px;
+.form-status-alert svg {
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
 }
 
 .success-alert {
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  color: #34d399;
+  color: #9fe0b8;
 }
 
 .error-alert {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  color: #f87171;
+  color: #ffab9a;
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-form .btn {
+    width: 100%;
+  }
 }

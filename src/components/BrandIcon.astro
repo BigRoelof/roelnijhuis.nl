@@ -1,0 +1,14 @@
+---
+// Inline brand logo from simple-icons, rendered at build time in currentColor
+import type { SimpleIcon } from "simple-icons";
+
+interface Props {
+  icon: SimpleIcon;
+}
+
+const { icon } = Astro.props;
+---
+
+<svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d={icon.path} />
+</svg>
