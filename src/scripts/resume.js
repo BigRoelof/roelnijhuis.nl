@@ -17,6 +17,7 @@ tabButtons.forEach(btn => {
 
     if (activeBtn) activeBtn.classList.remove('active');
     btn.classList.add('active');
+    btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
 
     if (activePane) {
       activePane.classList.remove('active');
