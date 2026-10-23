@@ -58,6 +58,16 @@
   height: 17px;
 }
 
+/* Logos wider than tall (e.g. Moneybird) get a little extra width */
+.skill-icons svg.brand-icon--wide {
+  width: 20px;
+}
+
+/* Logos that read small at 17px (e.g. Java cup); scaled so row height stays the same */
+.skill-icons svg.brand-icon--large {
+  transform: scale(1.3);
+}
+
 .skill-icons svg.lucide {
   stroke-width: 1.75;
 }
