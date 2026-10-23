@@ -58,6 +58,11 @@
   height: 17px;
 }
 
+/* Logos wider than tall (e.g. Moneybird) get a little extra width */
+.skill-icons svg.brand-icon--wide {
+  width: 20px;
+}
+
 .skill-icons svg.lucide {
   stroke-width: 1.75;
 }
